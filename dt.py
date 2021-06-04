@@ -20,16 +20,16 @@ def entropy(classes) :
 def remainder(attribute, classes) :
     uniAttr = attribute.unique()
     len = len(classes)
-    map = {};
+    map = {}
     rem = 0.0
     for val in uniAttr:
-        map[val] = [];
+        map[val] = []
     for val in uniAttr:
         tempRows = map[val]
         tempClass = classes[tempRows]
         entTemp = entropy(tempClass)
-        rem += (len(tempRows) / len) * entTemp;
-    return rem;
+        rem += (len(tempRows) / len) * entTemp
+    return rem
     pass
 
 
@@ -38,7 +38,20 @@ def remainder(attribute, classes) :
 ### remainder
 
 def selectAttribute(data, classes):
-   pass
+    numCol = data.shape[1]
+    minIndex = ""
+    minRem = 1.0
+    for index, atrr in data.iteritems():
+        tempRem = remainder(atrr, classes)
+        if tempRem < minRem:
+            minRem = tempRem
+            minIndex = index
+    return minIndex
+
+
+
+
+    pass
 
 ### Now we're ready to build a Decision Tree.
 ### A tree consists of one or more Nodes.
