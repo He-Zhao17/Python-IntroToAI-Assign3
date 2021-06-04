@@ -18,14 +18,26 @@ def entropy(classes) :
 ### Assume that both attribute and classes are pandas Series
 ### For each value of attribute, compute the entropy. Then return the weighted sum
 def remainder(attribute, classes) :
-   pass
+    uniAttr = attribute.unique()
+    len = len(classes)
+    map = {};
+    rem = 0.0
+    for val in uniAttr:
+        map[val] = [];
+    for val in uniAttr:
+        tempRows = map[val]
+        tempClass = classes[tempRows]
+        entTemp = entropy(tempClass)
+        rem += (len(tempRows) / len) * entTemp;
+    return rem;
+    pass
 
 
 ### assume that data is a pandas dataframe, and classes is a pandas series
 ### For each column in the dataframe, compute the remainder and select the column with the lowest
 ### remainder
 
-def selectAttribute(data, classes)
+def selectAttribute(data, classes):
    pass
 
 ### Now we're ready to build a Decision Tree.
