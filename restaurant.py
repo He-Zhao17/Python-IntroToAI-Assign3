@@ -26,7 +26,11 @@ def getARFFData(filename='restaurant.arff') :
 test = getARFFData()
 print(test[0])
 a = test[0].iloc[:, 0: 10]
+b = a[a["HasBar"] == "No"]
 print(a)
+print(b)
+b = b.drop(["HasBar"], axis = 1)
+print(b)
 
 
 

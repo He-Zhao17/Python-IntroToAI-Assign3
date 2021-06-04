@@ -46,7 +46,7 @@ def selectAttribute(data, classes):
         if tempRem < minRem:
             minRem = tempRem
             minIndex = index
-    return data[minIndex]
+    return minIndex
     pass
 
 ### Now we're ready to build a Decision Tree.
@@ -100,7 +100,16 @@ class DecisionTree :
 ###  2. Break the data into subsets according to each value of that attribute.
 ###  3. For each subset, call makeNode
 
-
+def ZeroR (cla, res):
+    counts = Counter(cla)
+    set = set(cla)
+    max = counts[cla[0]]
+    maxindex = cla[0]
+    for val in set:
+        if counts[val] > max:
+            max = counts[val]
+            maxindex = val
+    return maxindex
 
 def makeNode(df, attributeDict) :
 
@@ -123,11 +132,18 @@ def makeNode(df, attributeDict) :
         return Node(None, temp)
     # out of attr
     if df.shape[1] == 1:
-        return Node(None, ZeroR(cla));
+        temp = attributeDict[df.columns[-1]]
+        return Node(None, ZeroR(cla, temp))
 
+    # can be split
+    bestArr = selectAttribute(data, cla)
+    root = Node(bestArr)
 
-
-    pass
-
-
-
+    for val in attributeDict[bestArr]:
+        subAttrDic = dict.copy(attributeDict)
+        del subAttrDic[bestArr]
+        # edit the data
+        temp = data[data[bestArr] == val]
+        temp = temp.drop([bestArr], axis = 1)
+        root.children[val] = makeNode(temp, subAttrDic)
+    return root
