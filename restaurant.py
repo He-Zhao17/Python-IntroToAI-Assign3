@@ -1,3 +1,4 @@
+import pandas as pd
 ## pull ARFF data (restaurant data by default) into a pandas dataframe
 ## Note - this has only been tested with restaurant.arff.
 
@@ -22,6 +23,10 @@ def getARFFData(filename='restaurant.arff') :
             attributeDict[name] = vals
     return df, attributeDict
 
+test = getARFFData()
+print(test[0])
+a = test[0].iloc[:, 0: 10]
+print(a)
 
 
 

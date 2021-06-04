@@ -46,11 +46,7 @@ def selectAttribute(data, classes):
         if tempRem < minRem:
             minRem = tempRem
             minIndex = index
-    return minIndex
-
-
-
-
+    return data[minIndex]
     pass
 
 ### Now we're ready to build a Decision Tree.
@@ -69,6 +65,10 @@ class Node :
 
     ### you'll implement this
     def classify(self, instance):
+        if self.isLeaf():
+            return self
+        else:
+            key = instance.loc[]
        pass
 
     def __repr__(self) :
@@ -100,7 +100,33 @@ class DecisionTree :
 ###  2. Break the data into subsets according to each value of that attribute.
 ###  3. For each subset, call makeNode
 
+
+
 def makeNode(df, attributeDict) :
+
+    numRow = df.shape[0]
+    numCol = df.shape[1]
+    data = df.iloc[:, 0: numCol - 1]
+    cla = df.iloc[:, numCol - 1]
+    minCol = selectAttribute(data, cla)
+    root = Node()
+
+    # out of data
+    if numRow == 0:
+        resLabel = df.columns[-1]
+        zr = attributeDict[resLabel][0]
+        return Node(None, zr)
+    # all data is same
+    temp = cla[0]
+    tempCounts = Counter(cla)
+    if tempCounts[temp] == len(cla):
+        return Node(None, temp)
+    # out of attr
+    if df.shape[1] == 1:
+        return Node(None, ZeroR(cla));
+
+
+
     pass
 
 
