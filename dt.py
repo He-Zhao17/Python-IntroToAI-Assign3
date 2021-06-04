@@ -68,8 +68,9 @@ class Node :
         if self.isLeaf():
             return self
         else:
-            key = instance.loc[]
-       pass
+            key = instance.loc[self.attribute]
+            temp = instance.drop([self.attribute], axis = 1)
+            return self.children[key].classify(temp)
 
     def __repr__(self) :
         return "%s %s" % (self.attribute, self.value)
@@ -81,7 +82,7 @@ class DecisionTree :
 
     ### assume instance is a pandas dataframe - use node.classify as a helper.
     def classify(self, instance):
-        pass
+        return self.root.classify(instance)
 
 
 ### construct a decision tree. Inputs are a pandas dataframe containing a dataset,
