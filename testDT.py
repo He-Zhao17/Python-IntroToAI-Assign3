@@ -22,4 +22,8 @@ data = test[0].drop([tempcolumns[-1]], axis = 1)
 root = dt.makeNode(test[0], test[1])
 print("hellp")
 
+# 5-fold cross validation
+wholeData = test[0]
+
+
 
