@@ -112,7 +112,6 @@ def ZeroR (cla, res):
     counts = Counter(cla)
     xset = set(cla)
     max = counts[index[0]]
-    maxindex = index[0]
     for val in xset:
         if counts[val] > max:
             max = counts[val]
