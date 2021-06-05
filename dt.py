@@ -19,16 +19,19 @@ def entropy(classes) :
 ### For each value of attribute, compute the entropy. Then return the weighted sum
 def remainder(attribute, classes) :
     uniAttr = attribute.unique()
-    len = len(classes)
+    xlen = len(classes)
     map = {}
     rem = 0.0
     for val in uniAttr:
         map[val] = []
+    rows = attribute.index
+    for val in rows:
+        map[attribute[val]].append(val)
     for val in uniAttr:
         tempRows = map[val]
         tempClass = classes[tempRows]
         entTemp = entropy(tempClass)
-        rem += (len(tempRows) / len) * entTemp
+        rem += (len(tempRows) / xlen) * entTemp
     return rem
     pass
 
@@ -43,9 +46,12 @@ def selectAttribute(data, classes):
     minRem = 1.0
     for index, atrr in data.iteritems():
         tempRem = remainder(atrr, classes)
-        if tempRem < minRem:
+        print(tempRem)
+        if tempRem <= minRem:
             minRem = tempRem
             minIndex = index
+    print(minIndex)
+    print("\n")
     return minIndex
     pass
 
@@ -102,11 +108,12 @@ class DecisionTree :
 ###  3. For each subset, call makeNode
 
 def ZeroR (cla, res):
+    index = cla.index
     counts = Counter(cla)
-    set = set(cla)
-    max = counts[cla[0]]
-    maxindex = cla[0]
-    for val in set:
+    xset = set(cla)
+    max = counts[index[0]]
+    maxindex = index[0]
+    for val in xset:
         if counts[val] > max:
             max = counts[val]
             maxindex = val
@@ -127,7 +134,8 @@ def makeNode(df, attributeDict) :
         zr = attributeDict[resLabel][0]
         return Node(None, zr)
     # all data is same
-    temp = cla[0]
+    index = cla.index
+    temp = cla[index[0]]
     tempCounts = Counter(cla)
     if tempCounts[temp] == len(cla):
         return Node(None, temp)
@@ -140,11 +148,13 @@ def makeNode(df, attributeDict) :
     bestArr = selectAttribute(data, cla)
     root = Node(bestArr)
 
+    t = bestArr in attributeDict
+
     for val in attributeDict[bestArr]:
         subAttrDic = dict.copy(attributeDict)
         del subAttrDic[bestArr]
         # edit the data
-        temp = data[data[bestArr] == val]
+        temp = df[df[bestArr] == val]
         temp = temp.drop([bestArr], axis = 1)
         root.children[val] = makeNode(temp, subAttrDic)
     return root
