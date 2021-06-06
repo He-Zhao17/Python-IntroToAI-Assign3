@@ -87,6 +87,9 @@ class DecisionTree :
     def __init__(self, root) :
         self.root = root
 
+    def __init__(self, df, abbrDic):
+        self.root = makeNode(df, abbrDic)
+
     ### assume instance is a pandas dataframe - use node.classify as a helper.
     def classify(self, instance):
         return self.root.classify(instance)
