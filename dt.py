@@ -74,9 +74,10 @@ class Node :
         if self.isLeaf():
             return self
         else:
-            key = instance.loc[self.attribute]
-            temp = instance.drop([self.attribute], axis = 1)
-            return self.children[key].classify(temp)
+            key = instance[self.attribute]
+            nextNode = self.children[key]
+            nextInstance = instance.drop(self.attribute)
+            return nextNode.classify(nextInstance)
 
     def __repr__(self) :
         return "%s %s" % (self.attribute, self.value)

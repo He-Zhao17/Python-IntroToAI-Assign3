@@ -31,30 +31,39 @@ p = 0.0
 for i in range(1, 5):
     delRowsArr = range((i - 1) * a, i * a)
     df = wholeData.drop(delRowsArr)
-    classify = wholeData[delRowsArr]
+    checkSet = wholeData[(i - 1) * a : i * a]
     root = dt.makeNode(df, test[1])
     tNum = 0
-    idx = classify.index
-    cl = classify.columns
+    idx = checkSet.index
+    cl = checkSet.columns
     for val in idx:
-        temp = classify.iloc[val].drop[cl[-1]]
-        if root.classify(temp) == classify.iloc[val][cl[-1]]:
+        temp = checkSet.loc[val]
+        temp = temp.drop([cl[-1]])
+        x = root.classify(temp).value
+        bSer = checkSet.loc[val]
+        b = bSer[cl[-1]]
+        if x == b:
             tNum += 1
     p += tNum / a
-delRowsArr = range(4 * a , sumNum)
+delRowsArr = range(4 * a, sumNum)
 df = wholeData.drop(delRowsArr)
-classify = wholeData[delRowsArr]
+checkSet = wholeData[4 * a : sumNum]
 root = dt.makeNode(df, test[1])
 tNum = 0
-idx = classify.index
-cl = classify.columns
+idx = checkSet.index
+cl = checkSet.columns
 for val in idx:
-    temp = classify.iloc[val].drop[cl[-1]]
-    if root.classify(temp) == classify.iloc[val][cl[-1]]:
+    temp = checkSet.loc[val]
+    temp = temp.drop([cl[-1]])
+    x = root.classify(temp).value
+    bSer = checkSet.loc[val]
+    b = bSer[cl[-1]]
+    if x == b:
         tNum += 1
-p += tNum / (sumNum - 4 * a)
+p += tNum / a
 p = p / 5
-
+print("result: ")
+print(p)
 
 
 
