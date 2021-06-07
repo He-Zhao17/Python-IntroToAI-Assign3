@@ -30,6 +30,9 @@ scores = cross_val_score(cancerT, cancer.data, cancer.target, cv=5)
 print('\nresult with entropy:', scores.mean())
 
 for i in [2, 5, 10]:
-    t1 = RandomForestClassifier(n_estimators = i)
-    t1 = t1.fit(cancer.data, cancer.target)
+    for j in [0.25, 0.5, 1.0]:
+        t1 = RandomForestClassifier(n_estimators=i, max_features = j)
+        t1 = t1.fit(cancer.data, cancer.target)
+        scores = cross_val_score(cancerT, cancer.data, cancer.target, cv = 5)
+        print('\nresult with n_es = %d, max_features = %f:' % (i, j), scores.mean())
 
